@@ -1,0 +1,17 @@
+#william minting of nextgem
+{
+  query {
+    transfers (filter: {
+      to: {
+        in:["0xd90f7Fb941829CFE7Fc50eD235d1Efac05c58190"]
+      }
+    }){
+      nodes {
+        id
+        tokenId
+        from
+        to
+      }
+    }
+  }
+}

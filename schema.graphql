@@ -1,0 +1,73 @@
+# The collection entity is created by the factory
+type Collection @entity {
+  id: ID! # Transaction hash
+
+  collection: String!
+
+  royalties: BigInt!
+
+  owner: String!
+
+  collectionId: String!
+}
+# collection related entities
+
+type Initialized @entity {
+  id: ID! # Transaction hash
+
+  owner: String!
+
+  collectionId: String!
+
+  collection: String!
+}
+
+type Transfer @entity {
+  id: ID! # Transaction hash
+
+  from: String!
+
+  to: String!
+
+  tokenId: BigInt!
+
+  collection: String!
+  }
+
+  type RoleGranted @entity {
+    id: ID! # Transaction hash
+
+    role: String!
+
+    account: String!
+
+    sender: String!
+
+    collection: String!
+  }
+
+  type RoleRevoked @entity {
+    id: ID! # Transaction hash
+
+    role: String!
+
+    account: String!
+
+    sender: String!
+
+    collection: String!
+  }
+
+  type Mint @entity {
+    id: ID! # Transaction hash
+
+    minter: String!
+
+    to: String!
+
+    tokenId: BigInt!
+
+    tokenHash: String!
+
+    collection: String!
+  }

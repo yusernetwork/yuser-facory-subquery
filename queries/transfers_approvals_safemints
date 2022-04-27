@@ -1,0 +1,25 @@
+# query to get a few things from the chain -wdd dec 2nd 2021
+{
+  query {
+  
+    safeMints (first:5) {
+      nodes {
+        id
+        tokenURI
+        to
+      }
+    }
+    approvals (first:5) {
+      nodes {
+        id
+        
+      }
+    }
+    transfers (orderBy: TOKEN_ID_ASC){
+      nodes {
+        id
+        tokenId
+      }
+    }
+  }
+}

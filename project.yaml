@@ -1,0 +1,86 @@
+specVersion: 0.2.1
+name: "Yuser Collections"
+version: 1.0.0
+description: ''
+repository: "https://github.com/yusernetwork/yuser-network-subquery"
+schema:
+  file: ./schema.graphql
+
+
+network:
+  genesisHash: '0x91bc6e169807aaa54802737e1c504b2577d4fafedd5a02c10293b1cd60e39527' # Genesis hash of Moonbase
+  endpoint: wss://moonbeam-alpha.api.onfinality.io/public-ws
+  #endpoint: wss://moonbeam-alpha.api.onfinality.io/ws?apikey=ec967d6d-83cc-461f-8a70-ab7af4d6611d
+  # Optionally provide the HTTP endpoint of a full chain dictionary to speed up processing
+  dictionary: 'https://api.subquery.network/sq/subquery/moonbase-alpha-dictionary'
+  chaintypes:
+    file: "./types.yaml"
+
+
+
+dataSources:
+  - kind: substrate/Moonbeam
+    # better to use a few blocks before contract deployment
+    startBlock: 2063790
+    processor:
+      file: './node_modules/@subql/contract-processors/dist/moonbeam.js'
+      options:
+        abi: yuserFactory
+        # has to be replaced with the correct factory address
+        address: '0xc7E7A4156EAe572E39FEd05b9F7581b2ae8Ece8C'
+    assets:
+      yuserFactory:
+        file: ./yuserFactory.abi.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - handler: handleNewCollection
+          kind: substrate/MoonbeamEvent
+          filter:
+            topics:
+              - CollectionCreated(address yuserCollection, uint256 royalties, address owner, string collectionId)
+
+# the definition of the templates (the collections) and handling their events
+templates:
+  - name: Collection
+    kind: substrate/Moonbeam
+    processor:
+      file: './node_modules/@subql/contract-processors/dist/moonbeam.js'
+      options:
+        abi: collection
+        # we do not know the address at this point, it will be provided when instantiated
+    assets:
+      collection:
+        file: ./yuserCollection.abi.json
+    mapping:
+      file: ./dist/index.js
+      handlers:
+        - handler: handleCollectionInitialized
+          kind: substrate/MoonbeamEvent
+          filter:
+            topics:
+              - Initialized(address owner, string collectionId)
+        - handler: handleTransfer
+          kind: substrate/MoonbeamEvent
+          filter:
+           topics:
+              - Transfer(address indexed from,address indexed to,uint256 indexed tokenId)
+        - handler: handleRoleGranted
+          kind: substrate/MoonbeamEvent
+          filter:
+           topics:
+              - RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)
+        - handler: handleRoleRevoked
+          kind: substrate/MoonbeamEvent
+          filter:
+           topics:
+              - RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)
+        - handler: handleMint
+          kind: substrate/MoonbeamEvent
+          filter:
+            topics:
+              - Mint(address indexed minter, address indexed to, uint256 indexed tokenId, string tokenHash)
+
+    
+
+

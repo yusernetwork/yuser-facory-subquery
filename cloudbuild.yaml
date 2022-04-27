@@ -1,0 +1,22 @@
+#cloudbuild.yaml
+steps:
+- name: node
+  entrypoint: npm
+  args: ['install']
+- name: node
+  entrypoint: npm
+  args: ['run-script', 'codegen']
+- name: node
+  entrypoint: npm
+  args: ['run-script', 'build']
+- name: 'docker/compose:1.19.0'
+  args: ['pull']
+- name: 'docker/compose:1.19.0'
+  args: ['up', '-d']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'postgres:12-alpine', 'gcr.io/$PROJECT_ID/postgres:$COMMIT_SHA']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'onfinality/subql-node:latest', 'gcr.io/$PROJECT_ID/subql-node:$COMMIT_SHA']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'onfinality/subql-query:latest', 'gcr.io/$PROJECT_ID/subql-query:$COMMIT_SHA']
+images: ['gcr.io/$PROJECT_ID/postgres:$COMMIT_SHA', 'gcr.io/$PROJECT_ID/subql-node:$COMMIT_SHA', 'gcr.io/$PROJECT_ID/subql-query:$COMMIT_SHA']

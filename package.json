@@ -1,0 +1,33 @@
+{
+  "name": "yuser-collections-subquery",
+  "version": "1.0.0",
+  "description": "a subquery project for indexing Yuser Inc. collections",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -b",
+    "prepack": "rm -rf dist && npm build",
+    "test": "jest",
+    "codegen": "./node_modules/.bin/subql codegen"
+  },
+  "homepage": "https://github.com/yusernetwork/yuser-network-subquery",
+  "repository": "github:yusernetwork/yuser-network-subquery",
+  "files": [
+    "dist",
+    "schema.graphql",
+    "project.yaml"
+  ],
+  "author": "Kasra Naderi",
+  "license": "MIT",
+  "devDependencies": {
+    "@polkadot/api": "^7.0.1",
+    "@subql/cli": "^0.25.0",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "@subql/contract-processors": "^0.5.4",
+    "@subql/types": "^0.14.0",
+    "ethers": "^5.6.3",
+    "node-fetch": "npm:@achingbrain/node-fetch@^2.6.7",
+    "superagent": "^7.1.1"
+  }
+}
