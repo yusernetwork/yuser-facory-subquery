@@ -4,7 +4,7 @@
   "description": "a subquery project for indexing Yuser Inc. collections",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc -b",
+    "build": "./node_modules/.bin/subql build",
     "prepack": "rm -rf dist && npm build",
     "test": "jest",
     "codegen": "./node_modules/.bin/subql codegen"
@@ -32,5 +32,5 @@
   },
   "resolutions": {
     "ipfs-unixfs": "6.0.6"
-  } 
+  }
 }
