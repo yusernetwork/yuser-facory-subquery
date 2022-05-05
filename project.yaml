@@ -9,8 +9,8 @@ schema:
 
 network:
   genesisHash: '0x91bc6e169807aaa54802737e1c504b2577d4fafedd5a02c10293b1cd60e39527' # Genesis hash of Moonbase
-  endpoint: wss://moonbeam-alpha.api.onfinality.io/public-ws
-  #endpoint: wss://moonbeam-alpha.api.onfinality.io/ws?apikey=ec967d6d-83cc-461f-8a70-ab7af4d6611d
+  #endpoint: wss://moonbeam-alpha.api.onfinality.io/public-ws
+  endpoint: https://moonbeam-alpha.api.onfinality.io/public
   # Optionally provide the HTTP endpoint of a full chain dictionary to speed up processing
   dictionary: 'https://api.subquery.network/sq/subquery/moonbase-alpha-dictionary'
   chaintypes:
@@ -21,7 +21,7 @@ network:
 dataSources:
   - kind: substrate/Moonbeam
     # better to use a few blocks before contract deployment
-    startBlock: 2063790
+    startBlock: 2106785
     processor:
       file: './node_modules/@subql/contract-processors/dist/moonbeam.js'
       options:
@@ -80,7 +80,4 @@ templates:
           filter:
             topics:
               - Mint(address indexed minter, address indexed to, uint256 indexed tokenId, string tokenHash)
-
-    
-
 
