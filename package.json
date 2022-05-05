@@ -25,12 +25,10 @@
   },
   "dependencies": {
     "@subql/contract-processors": "^0.5.4",
+    "@subql/node": "^0.35.0",
     "@subql/types": "^0.14.0",
     "ethers": "^5.6.3",
     "node-fetch": "npm:@achingbrain/node-fetch@^2.6.7",
     "superagent": "^7.1.1"
-  },
-  "resolutions": {
-    "ipfs-unixfs": "6.0.6"
   }
 }
